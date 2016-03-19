@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>es6 den</title>
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="../bower_components/skeleton/css/skeleton.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <article class="six columns bordered-box">
+            <header class="bold">Iterator function on Array</header>
+            <hr>
+            <pre>
+function iteratorFn() {
+  let numbers = [1, 2, 3, 4];
+
+  <i>// numbers.values();</i>
+  let iterator = <code class="coral bold">numbers[Symbol.iterator]()</code>;
+  <i>//next() forces a code inside the generator</i>
+  let next = iterator<code class="coral bold">.next()</code>;
+
+  let sum = 0;
+  while (!next.done) {
+    sum += next.value;
+    next = iterator.next();
+  }
+
+  alert(sum);
+}
+            </pre>
+            <button onclick="iteratorFn();">Run</button>
+        </article>
+        <article class="six columns bordered-box">
+            <header class="bold">FOR OF operator</header>
+            <hr>
+              <pre>
+function forOfFn() {
+  let numbers = [1, 2, 3, 4];
+
+  let sum = 0;
+  <code class="coral bold">for</code>(let n <code class="coral bold">of</code> numbers) {
+    sum += n;
+  }
+
+  console.log(sum);
+}
+              </pre>
+            <button onclick="forOfFn();">Run</button>
+        </article>
+    </div>
+
+    <div class="row">
+        <article class="six columns bordered-box">
+            <header class="bold">Custom Iterator</header>
+            <hr>
+            <pre>
+function customIteratorFn() {
+  class Company {
+    constructor() {
+      this.employees = [];
+    }
+
+    addEmployees(...names) {
+      this.employees = this.employees.concat(names);
+    }
+
+    [Symbol.iterator]() {
+      return new ArrayIterator(this.employees);
+    }
+  }
+
+  class ArrayIterator {
+    constructor (arr) {
+      this.array = arr;
+      this.index = 0;
+    }
+
+    <code class="coral bold">next ()</code> {
+      var result = {
+        value: undefined,
+        done: true
+      };
+      <i>//do whatever we want: sorting, steping, etc.</i>
+      if (this.index < this.array.length) {
+        result.value = this.array[this.index];
+        result.done = false;
+        this.index += 1;
+      }
+
+      return result;
+    }
+  }
+
+  let company = new Company();
+  let count = 0;
+
+  company.addEmployees('Tim', 'John', 'Alex');
+
+  for(<code><span class="coral bold">let</span> employee <span
+                class="coral bold">of</span> company</code>) {
+    count += 1;
+  }
+
+  alert(count);
+}
+            </pre>
+            <button onclick="customIteratorFn();">Run</button>
+        </article>
+        <article class="six columns bordered-box">
+            <header class="bold">Generator function</header>
+            <hr>
+            <pre>
+function generatorsFn() {
+  let numbers = <code class="coral bold">function*</code>() {
+    <i>/* yield could return a param from next */</i>
+    yield 1;
+    yield 2;
+    yield 3;
+  };
+
+  let sum = 0;
+  for(let n of numbers()) {
+    sum += n;
+  }
+  alert(sum);
+
+  sum = 0;
+  let iterator = <code class="coral bold">numbers()</code>;
+  let next = iterator.next(<i>/* could accept param */</i>);
+  while(!next.done) {
+    sum += next.value;
+    next = iterator.next();
+  }
+
+  alert(sum);
+}
+            </pre>
+            <button onclick="generatorFn();">Run</button>
+        </article>
+        <article class="six columns bordered-box">
+            <header class="bold">Custom generator</header>
+            <hr>
+            <pre>
+function customGeneratorFn() {
+  class Company {
+    constructor() {
+      this.employees = [];
+    }
+
+    addEmployees(...names) {
+      this.employees = this.employees.concat(names);
+    }
+
+    *[Symbol.iterator]() {
+      for(let e of this.employees) {
+        yield e;
+      }
+    }
+  }
+
+  let company = new Company();
+  let count = 0;
+
+  company.addEmployees('Tim', 'John', 'Alex', 'Tom');
+
+  for (let employee of company) {
+    count += 1;
+  }
+
+  alert(count);
+
+  let filter = function*(items, predicate) {
+    //return undefined/0/-1; sets done flag to true
+    for (let item of items) {
+      if(predicate(item)) {
+        yield item;
+      }
+    }
+  };
+
+  count = 0;
+  for (let employee of filter(company, e => e[0] == 'T')) {
+    count += 1;
+  }
+
+  alert(count);
+}
+            </pre>
+            <button onclick="customGeneratorFn();">Run</button>
+        </article>
+    </div>
+
+    <div class="row">
+        <article class="six columns bordered-box">
+            <header class="bold">Comprehensions</header>
+            <hr>
+            <pre>
+function comprehensionsFn() {
+ var numbers = [for (n of [1,2,3]) n * n];
+ console.log(n);
+}
+            </pre>
+            <button onclick="comprehensionsFn();">Run</button>
+        </article>
+        <article class="six columns bordered-box">
+            <header class="bold"></header>
+            <hr>
+            <pre>
+
+            </pre>
+            <button onclick="();">Run</button>
+        </article>
+    </div>
+
+    <div class="row">
+        <article class="six columns bordered-box">
+            <header class="bold"></header>
+            <hr>
+            <pre>
+
+            </pre>
+            <button onclick="();">Run</button>
+        </article>
+        <article class="six columns bordered-box">
+            <header class="bold"></header>
+            <hr>
+            <pre>
+
+            </pre>
+            <button onclick="();">Run</button>
+        </article>
+    </div>
+</div>
+
+
+<!-- build:js scripts/vendor.js -->
+<!-- bower:js -->
+<!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:js app.js -->
+<script src="scripts/main.js"></script>
+<!-- endbuild -->
+</body>
+</html>
