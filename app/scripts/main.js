@@ -154,3 +154,38 @@ function customGeneratorFn() {
  * }
  * */
 
+
+function numbersFn() {
+  isNan("NaN") === true;
+
+  Number.isNaN("NaN") === false;
+
+  Number.isInteger(1) === true;
+  Number.isInteger(1.0) === true;
+}
+
+function arraysFn() {
+  (new Array(3)).fill('b');
+
+  var arrayLike = document.querySelector('div');
+  Array.from(arrayLike);
+
+  var a  = ['a', 'b', 'c'];
+  a.entries().next().value;
+  a.keys().next().value;
+
+  var arr = [
+    for (first of ['William', 'John', 'Blake'])
+    for (middle of ['Robert', 'Andrew', 'John'])
+    if (first != middle) (first + ' ' + middle)
+  ];
+}
+
+function setsFn() {
+  var set = new Set();
+
+
+
+  set.size;
+
+}
