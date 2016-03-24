@@ -183,9 +183,30 @@ function arraysFn() {
 
 function setsFn() {
   var set = new Set();
-
-
+  var key = {};
 
   set.size;
+  set.add(key);
+  set.has(key);
 
+  //return iterator;
+  set.entries();
+  set.values();
+
+  set.delete(key);
+  set.clear();
+}
+
+function mapsFn() {
+  var map = new Map();
+
+  map.set('age', 25);
+  map.get('age');
+
+  map.delete('age');
+  map.set({name: 'Artur'}, 25);
+
+  for (let [key, value] of map) {}
+
+  map.clear();
 }
