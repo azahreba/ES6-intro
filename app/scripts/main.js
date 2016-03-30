@@ -210,3 +210,11 @@ function mapsFn() {
 
   map.clear();
 }
+
+function weak() {
+  var set = new WeakSet();
+  console.log(set.size);
+  console.log(set.entries);
+  console.log(set.values);
+  console.log(set.forEach);
+}
