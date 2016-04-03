@@ -208,7 +208,11 @@ function mapsFn() {
   map.get('age');
 
   map.delete('age');
-  map.set({name: 'Artur'}, 25);
+
+  var user = {name: 'Artur', id: 1234};
+
+  map.set(user, {data: []});
+  map.get(user);
 
   for (let [key, value] of map) {}
 
