@@ -1,5 +1,7 @@
 'use strict';
 
+import {Employee} from './module';
+
 function iteratorFn() {
   let numbers = [1, 2, 3, 4];
 
@@ -174,11 +176,13 @@ function arraysFn() {
   a.entries().next().value;
   a.keys().next().value;
 
+  /*
   var arr = [
     for (first of ['William', 'John', 'Blake'])
     for (middle of ['Robert', 'Andrew', 'John'])
     if (first != middle) (first + ' ' + middle)
   ];
+  */
 }
 
 function setsFn() {
@@ -218,3 +222,78 @@ function weak() {
   console.log(set.values);
   console.log(set.forEach);
 }
+
+
+function promise() {
+  var promises = [Promise.resolve('Resolved'), Promise.resolve('Promises')];
+  Promise.all(promises)
+    .then(function (values) {
+      console.log.apply(console, values);
+    });
+
+  Promise.race(promises); //first resolved from array;
+}
+
+function obj() {
+  Object.is(1, 2); //similar to ===
+  Object.is(-0, 0); //false
+  Object.is(NaN, NaN); //true
+
+  Object.assign({source: 1}, {mixin: 2});
+
+  var model = 'BMW';
+  var year = 2016;
+  var propName = 'type';
+  var propVal = 'car';
+
+  var car = {
+    model,
+    year,
+    getModel() {
+      return this.model;
+    },
+    [propName]: propVal
+  };
+}
+
+
+function proxies() {
+  var unicorn = {
+    legs: 4,
+    color: 'brown',
+    horn: true,
+    hornAttack: function (target) {
+      return target.name + ' was obliterated';
+    }
+  };
+
+  var proxyUnicorn = new Proxy(unicorn, {
+    get: function (target, prop) {
+      if (prop === 'color') {
+        return 'awesome' + target[prop];
+      } else {
+        return target[prop];
+      }
+    }
+    /*
+    * set: function () {}
+    * */
+  });
+
+  unicorn.hornAttack = new Proxy(unicorn.hornAttack, {
+    apply: function(target, context, args) {
+      if (context !== unicorn) {
+        return 'nobody can use unicorn horn';
+      } else {
+        return target.apply(context, args);
+      }
+    }
+  });
+
+  var thief = {name: 'Rupert'};
+
+  thief.attack = unicorn.hornAttack;
+  thief.attack();
+}
+
+console.log(Employee);
