@@ -301,3 +301,67 @@ function proxies() {
 }
 
 console.log(Employee);
+
+//made own get/fetch method
+function get(url) {
+  return new Promise(function(resolve, reject) {
+    $.get(url, function(data) {
+      resolve(data);
+    })
+      .fail(function (e) {
+        reject(e);
+      });
+  });
+}
+
+//chain of calls
+function getOrder() {
+  return
+}
+
+getOrder(3).then(function(order) {
+  return getUser(order.userId);
+}).then(function(user) {
+  return getCompany(user.companyId);
+}).then(function(company) {
+  //done...
+}).catch(function(error) {
+  //handle error...
+});
+
+function g1 (str) {
+  return new Promise(function (res, rej) {
+    setTimeout(
+      function () {
+        res(str);
+      },
+    5000);
+  });
+}
+
+function g2 (str) {
+  return new Promise(function (res, rej) {
+    setTimeout(
+      function () {
+        res(str);
+      },
+      3000);
+  });
+}
+
+function g3 (str) {
+  return Promise.resolve(str);
+}
+
+g2('first')
+  .then(function (str){
+    console.log(str);
+    return g1('second');
+  })
+  .then(function (str){
+    console.log(str);
+    return g3('third');
+  })
+  .then(function (str){
+    console.log(str);
+  });
